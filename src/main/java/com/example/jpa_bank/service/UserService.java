@@ -12,22 +12,17 @@ import org.springframework.stereotype.Service;
 public class UserService {
     UserRepository userRepository;
     AccountRepository accountRepository;
-
-    public String createUser(UserDto userDto)
-    {
-        userRepository.save(new UserEntity(userDto.getDocument(),userDto.getName(),userDto.getLast_name(),userDto.getDate_created()));
+    public String createUser(UserDto userDto) {
+        userRepository.save(new UserEntity(userDto.getDocument(),userDto.getName(),userDto.getLastName(),userDto.getDateCreated()));
         return "An user was created";
     }
-
-    public String consultAccounts(int documentUser)
-    {   try {
-        UserEntity actualuser = userRepository.findById(documentUser).orElse(new UserEntity());
-        return "The user: "+actualuser.getName()+" has: "+accountRepository.getAllAccounts(documentUser);
-    }
-    catch (Exception e)
-    {
+    public String consultAccounts(int documentUser) {
+        try {
+        UserEntity actualUser = userRepository.findById(documentUser).orElse(new UserEntity());
+        return "The user: "+actualUser.getName()+" has: "+accountRepository.getAllAccounts(documentUser);
+        }
+        catch (Exception e){
         return "the user does not exist or does not have an account";
-    }
-
+        }
     }
 }

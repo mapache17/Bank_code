@@ -14,40 +14,28 @@ import org.springframework.stereotype.Service;
 public class AccountService {
     AccountRepository accountRepository;
     UserRepository userRepository;
-    public String insertAccount(AccountDto accountDto)
-    {
-
-        if(this.userRepository.existsById(accountDto.getUser()) && accountRepository.getAllAccounts(accountDto.getUser()).size()<=4)
-        {
+    public String insertAccount(AccountDto accountDto){
+        if(this.userRepository.existsById(accountDto.getUser()) && accountRepository.getAllAccounts(accountDto.getUser()).size()<=4) {
             accountRepository.save(new AccountEntity(accountDto.getId(),accountDto.getType(),accountDto.getMoney(),accountDto.getDateCreated(),accountDto.getUser()));
             return "The account was created";
         }
-        else
-        {
+        else{
             return "Failed to create a account";
         }
     }
-
-    public String depositMoney(DepositMoneyUserDto depositMoneyUserDto)
-    {
-
-        try {
+    public String depositMoney(DepositMoneyUserDto depositMoneyUserDto) {
+        try{
             accountRepository.depositMoney(depositMoneyUserDto.getMoneyAmount(), depositMoneyUserDto.getAccountNumber());
             return "Your account has been recharged ";
         }
-        catch (Exception e)
-        {
+        catch (Exception e){
             System.out.println(e);
             return "Your account has NOT been recharged";
         }
-
     }
-    public String checkBalance(int accountNumber) {
+    public String checkBalance(int accountNumber){
         AccountEntity actualAccount = accountRepository.findById(accountNumber).orElse(new AccountEntity());
-        UserEntity actualuser = userRepository.findById(actualAccount.getUser()).orElse(new UserEntity());
-        return "The user: " +actualuser.getName() +" Has $"+actualAccount.getMoney()+" with account number: "+accountNumber;
-
+        UserEntity actualUser = userRepository.findById(actualAccount.getUser()).orElse(new UserEntity());
+        return "The user: " +actualUser.getName() +" Has $"+actualAccount.getMoney()+" with account number: "+accountNumber;
     }
-
-
 }

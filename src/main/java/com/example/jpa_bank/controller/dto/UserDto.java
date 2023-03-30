@@ -6,6 +6,6 @@ import lombok.Data;
 public class UserDto {
     private int document;
     private String name;
-    private String last_name;
-    private String date_created;
+    private String lastName;
+    private String dateCreated;
 }
