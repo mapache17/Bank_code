@@ -9,4 +9,5 @@ public class AccountDto {
     private int money=0;
     private String dateCreated;
     private int user;
+
 }
