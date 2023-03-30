@@ -12,13 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-
 public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String type;
     private int money;
-    private String date_created;
+    private String dateCreated;
     private int user;
 }
