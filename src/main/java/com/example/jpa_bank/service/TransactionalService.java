@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class TransactionalService {
-    TransactionRepository transactionRepository;
-    AccountRepository accountRepository;
+    private TransactionRepository transactionRepository;
+    private AccountRepository accountRepository;
     public String doTransaction(TransactionDto transactionDto) {
         if (this.accountRepository.existsById(transactionDto.getDestination())&&this.accountRepository.existsById(transactionDto.getOrigen())) {
             AccountEntity senderAccount = accountRepository.findById(transactionDto.getOrigen()).orElse(new AccountEntity());
@@ -30,7 +30,7 @@ public class TransactionalService {
             return "The account doesn't exist";
         }
     }
-    private void insertTable(TransactionDto transactionDto){
+    public void insertTable(TransactionDto transactionDto){
         transactionRepository.save(new TransactionEntity(transactionDto.getId(), transactionDto.getOrigen(),transactionDto.getDestination(),transactionDto.getAmount()));
     }
 }
