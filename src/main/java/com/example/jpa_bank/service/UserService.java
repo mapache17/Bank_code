@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class UserService {
-    UserRepository userRepository;
-    AccountRepository accountRepository;
+    private UserRepository userRepository;
+    private AccountRepository accountRepository;
     public String createUser(UserDto userDto) {
         userRepository.save(new UserEntity(userDto.getDocument(),userDto.getName(),userDto.getLastName(),userDto.getDateCreated()));
         return "An user was created";
