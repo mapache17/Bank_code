@@ -15,8 +15,14 @@ public class UserController {
     public UserEntity createUser(@RequestBody UserDto userDto){
         return userService.createUser(userDto);
     }
-    @GetMapping(path = "/account/check-accounts/{idDocument}")
+    @GetMapping(path = "/user/check-accounts/{idDocument}")
     public List<AccountEntity> getAllAccounts(@PathVariable int idDocument) {
         return userService.consultAccounts(idDocument);
     }
+    @GetMapping(path = "/user/check-Users/{id}")
+    public List<AccountEntity> getAllUsers(@PathVariable int id) {
+        return userService.consultAccounts(id);
+    }
+
+
 }

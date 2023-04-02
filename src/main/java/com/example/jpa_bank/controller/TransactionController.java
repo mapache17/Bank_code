@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class TransactionController {
     private TransactionalService transactionalService;
-    @PostMapping(path = "/transaction/money-sender")
+    @PostMapping(path = "/transaction/transfer-money")
     public TransactionEntity doTransaction(@RequestBody TransactionDto transactionDto) {
         return transactionalService.doTransaction(transactionDto);
     }
