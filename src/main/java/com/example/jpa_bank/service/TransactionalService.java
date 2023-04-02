@@ -13,24 +13,19 @@ import org.springframework.stereotype.Service;
 public class TransactionalService {
     private TransactionRepository transactionRepository;
     private AccountRepository accountRepository;
-    public String doTransaction(TransactionDto transactionDto) {
-        if (this.accountRepository.existsById(transactionDto.getDestination())&&this.accountRepository.existsById(transactionDto.getOrigen())) {
-            AccountEntity senderAccount = accountRepository.findById(transactionDto.getOrigen()).orElse(new AccountEntity());
-            if (senderAccount.getMoney()>=transactionDto.getAmount()){
-                accountRepository.depositMoney(transactionDto.getAmount(),transactionDto.getDestination());
-                accountRepository.depositMoney(-1*transactionDto.getAmount(),transactionDto.getOrigen());
-                this.insertTable(transactionDto);
-                return "successful transfer: "+transactionDto;
-            }
-            else{
-                return "Insufficient balance";
-            }
+    public TransactionEntity doTransaction(TransactionDto transactionDto) {
+        if (!this.accountRepository.existsById(transactionDto.getDestination())) {
+            throw new RuntimeException("Verifique la cuenta de destino.");
         }
-        else{
-            return "The account doesn't exist";
+        if (!this.accountRepository.existsById(transactionDto.getOrigen())) {
+            throw new RuntimeException("Verifique la cuenta de origen.");
         }
-    }
-    public void insertTable(TransactionDto transactionDto){
-        transactionRepository.save(new TransactionEntity(transactionDto.getId(), transactionDto.getOrigen(),transactionDto.getDestination(),transactionDto.getAmount()));
+        AccountEntity senderAccount = accountRepository.findById(transactionDto.getOrigen()).orElse(new AccountEntity());
+        if (senderAccount.getMoney()<transactionDto.getAmount()) {
+            throw new RuntimeException("Fondos insuficientes.");
+        }
+        accountRepository.depositMoney(transactionDto.getAmount(),transactionDto.getDestination());
+        accountRepository.depositMoney(-1*transactionDto.getAmount(),transactionDto.getOrigen());
+        return transactionRepository.save(new TransactionEntity(transactionDto.getId(), transactionDto.getOrigen(),transactionDto.getDestination(),transactionDto.getAmount()));
     }
 }
