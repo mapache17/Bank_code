@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEntity,Integer> {
     @Modifying
-    @Query(value = "update ACCOUNT a set a.MONEY = a.Money+ :money  where a.ID = :idAccount",nativeQuery = true)
+    @Query(value = "update ACCOUNT a set a.money = a.money+ :money  where a.id = :idAccount",nativeQuery = true)
     void depositMoney(@Param("money") int money,@Param("idAccount") int idAccount);
-    @Query(value ="select * from ACCOUNT where USER = ?1", nativeQuery = true)
+    @Query(value ="select * from ACCOUNT where user_identity = ?1", nativeQuery = true)
     List<AccountEntity> getAllAccounts(int documentUser);
 }
