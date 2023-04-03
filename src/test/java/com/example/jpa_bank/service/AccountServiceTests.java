@@ -1,5 +1,6 @@
 package com.example.jpa_bank.service;
 import com.example.jpa_bank.controller.dto.AccountDto;
+import com.example.jpa_bank.controller.dto.DepositMoneyUserDto;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.repository.AccountRepository;
 import com.example.jpa_bank.repository.UserRepository;
@@ -10,7 +11,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTests {
@@ -63,6 +67,28 @@ public class AccountServiceTests {
         Mockito.verify(userRepository).existsById(accountDto.getUser());
         Mockito.verify(accountRepository).getAllAccounts(accountDto.getUser());
         Mockito.verify(accountRepository).save(new AccountEntity(3,"Ahorro",0,"2025-03-24",1));
+    }
+    @Test
+    void Given_AAccountNOExist_When_Invoke_depositMoney_Then_RuntimeException()
+    {
+        DepositMoneyUserDto depositMoneyUserDto = new DepositMoneyUserDto(100,1);
+        Mockito.when(accountRepository.existsById(depositMoneyUserDto.getAccountNumber())).thenReturn(false);
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            accountService.depositMoney(depositMoneyUserDto);
+        });
+        Mockito.verify(accountRepository).existsById(depositMoneyUserDto.getAccountNumber());
+    }
+    @Test
+    void Given_AnExistingAccount_When_Invoke_depositMoney_Then_RuntimeException()
+    {
+        DepositMoneyUserDto depositMoneyUserDto = new DepositMoneyUserDto(100,1);
+        Mockito.when(accountRepository.existsById(depositMoneyUserDto.getAccountNumber())).thenReturn(true);
+        Optional<AccountEntity> accountEntity = Optional.of(new AccountEntity( 1,"Ahorro",0,"2025-03-24",1));
+        Mockito.when(accountRepository.findById(depositMoneyUserDto.getAccountNumber())).thenReturn(accountEntity);
+        Assertions.assertEquals(new AccountEntity(1,"Ahorro",0,"2025-03-24",1),accountService.depositMoney(depositMoneyUserDto));
+        Mockito.verify(accountRepository).existsById(depositMoneyUserDto.getAccountNumber());
+        Mockito.verify(accountRepository).findById(depositMoneyUserDto.getAccountNumber());
+
     }
 
 }
