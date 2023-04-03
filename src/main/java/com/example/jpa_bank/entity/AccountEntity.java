@@ -23,6 +23,6 @@ public class AccountEntity {
     private int money;
     @Column(name ="date_created", nullable = false)
     private String dateCreated;
-    @Column(name ="user", nullable = false)
+    @Column(name ="user_identity", nullable = false)
     private int user;
 }
