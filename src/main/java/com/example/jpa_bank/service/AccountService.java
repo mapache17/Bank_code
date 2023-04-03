@@ -14,7 +14,8 @@ public class AccountService {
     private AccountRepository accountRepository;
     private UserRepository userRepository;
     public AccountEntity insertAccount(AccountDto accountDto){
-        if(!(accountRepository.getAllAccounts(accountDto.getUser()).size()<4)) {
+        int size=accountRepository.getAllAccounts(accountDto.getUser()).size();
+        if(!(size<4)) {
             throw new RuntimeException("Excede el numero de cuentas registradas.");
         }
         if(!this.userRepository.existsById(accountDto.getUser())){
@@ -22,6 +23,7 @@ public class AccountService {
         }
         return accountRepository.save(new AccountEntity(accountDto.getId(),accountDto.getType(),accountDto.getMoney(),accountDto.getDateCreated(),accountDto.getUser()));
     }
+
     public AccountEntity depositMoney(DepositMoneyUserDto depositMoneyUserDto) {
         if(!this.accountRepository.existsById(depositMoneyUserDto.getAccountNumber())){
             throw new RuntimeException("La cuenta a la que quiere depositar no existe.");
