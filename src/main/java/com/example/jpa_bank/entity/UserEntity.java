@@ -1,5 +1,6 @@
 package com.example.jpa_bank.entity;
 
+import com.example.jpa_bank.controller.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,4 +23,5 @@ public class UserEntity {
     private String lastName;
     @Column(name ="date_created", nullable = false)
     private String dateCreated;
+
 }
