@@ -11,8 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -88,7 +86,27 @@ public class AccountServiceTests {
         Assertions.assertEquals(new AccountEntity(1,"Ahorro",0,"2025-03-24",1),accountService.depositMoney(depositMoneyUserDto));
         Mockito.verify(accountRepository).existsById(depositMoneyUserDto.getAccountNumber());
         Mockito.verify(accountRepository).findById(depositMoneyUserDto.getAccountNumber());
-
+    }
+    @Test
+    void Given_AAccountNOExist_When_Invoke_checkBalance_Then_RuntimeException()
+    {
+        AccountDto accountDto = new AccountDto(1,"Ahorro",0,"2025-03-24",1);
+        Mockito.when(accountRepository.existsById(accountDto.getId())).thenReturn(false);
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            accountService.checkBalance(accountDto.getId());
+        });
+        Mockito.verify(accountRepository).existsById(accountDto.getId());
+    }
+    @Test
+    void Given_AnExistingAccount_When_Invoke_checkBalance_Then_RuntimeException()
+    {
+        AccountDto accountDto = new AccountDto(1,"Ahorro",0,"2025-03-24",1);
+        Mockito.when(accountRepository.existsById(accountDto.getId())).thenReturn(true);
+        Optional<AccountEntity> accountEntity = Optional.of(new AccountEntity( 1,"Ahorro",0,"2025-03-24",1));
+        Mockito.when(accountRepository.findById(accountDto.getId())).thenReturn(accountEntity);
+        Assertions.assertEquals(new AccountEntity(1,"Ahorro",0,"2025-03-24",1),accountService.checkBalance(accountDto.getId()));
+        Mockito.verify(accountRepository).existsById(accountDto.getId());
+        Mockito.verify(accountRepository).findById(accountDto.getId());
     }
 
 }
