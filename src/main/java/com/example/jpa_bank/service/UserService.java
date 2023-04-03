@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +19,9 @@ public class UserService {
         return userRepository.save(new UserEntity(userDto.getDocument(),userDto.getName(),userDto.getLastName(),userDto.getDateCreated()));
     }
     public List<AccountEntity> consultAccounts(int documentUser) {
+        if(!this.userRepository.existsById(documentUser)){
+            throw new RuntimeException("El usuario que quiere consultar no existe.");
+        }
         return accountRepository.getAllAccounts(documentUser);
     }
 

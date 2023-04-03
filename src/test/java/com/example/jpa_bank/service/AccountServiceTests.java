@@ -23,8 +23,7 @@ public class AccountServiceTests {
     @Mock
     private UserRepository userRepository;
     @Test
-    void Given_AUserWithMoreThanFourRegisteredAccounts_When_Invoke_insertAccount_Then_throwRuntimeException()
-    {
+    void Given_AUserWithMoreThanFourRegisteredAccounts_When_Invoke_insertAccount_Then_throwRuntimeException() {
         ArrayList<AccountEntity> mock = new ArrayList<>();
         mock.add(new AccountEntity(  1,"Ahorro",0,"2025-03-24",1));
         mock.add(new AccountEntity(  2,"Ahorro",0,"2025-03-24",1));
@@ -38,8 +37,7 @@ public class AccountServiceTests {
         Mockito.verify(accountRepository).getAllAccounts(accountDto.getUser());
     }
     @Test
-    void Given_AUserNOExist_When_Invoke_insertAccount_Then_throwRunTimeException()
-    {
+    void Given_AUserNOExist_When_Invoke_insertAccount_Then_throwRunTimeException() {
         ArrayList<AccountEntity> mock = new ArrayList<>();
         mock.add(new AccountEntity(  1,"Ahorro",0,"2025-03-24",1));
         mock.add(new AccountEntity(  2,"Ahorro",0,"2025-03-24",1));
@@ -51,8 +49,7 @@ public class AccountServiceTests {
         Mockito.verify(userRepository).existsById(accountDto.getUser());
     }
     @Test
-    void Given_AnExistingUserWithLessThanFourAccounts_When_Invoke_insertAccount_Then_Return_AccountEntity()
-    {
+    void Given_AnExistingUserWithLessThanFourAccounts_When_Invoke_insertAccount_Then_Return_AccountEntity() {
         ArrayList<AccountEntity> mock = new ArrayList<>();
         mock.add(new AccountEntity(  1,"Ahorro",0,"2025-03-24",1));
         mock.add(new AccountEntity(  2,"Ahorro",0,"2025-03-24",1));
