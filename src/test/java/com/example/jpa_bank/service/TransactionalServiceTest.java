@@ -61,4 +61,25 @@ class TransactionalServiceTest {
         Mockito.verify(transactionRepository, Mockito.never()).save(any(TransactionEntity.class));
 
     }
+    @Test
+    void Given_ExistingOriginAccountWithExistingDestinationAccountWithEnoughMoney_When_Invoke_doTransaction_Then_Return_TransactionEntity(){
+        AccountEntity senderAccount=(new AccountEntity(  1,"Ahorro",100,"2025-03-24",1));
+        AccountEntity destinationAccount=(new AccountEntity(  2,"Ahorro",0,"2025-03-24",2));
+        TransactionDto transactionDto = new TransactionDto(1, 1, 2, 100);
+
+        Mockito.when(accountRepository.existsById(transactionDto.getDestination())).thenReturn(true);
+        Mockito.when(accountRepository.existsById(transactionDto.getOrigen())).thenReturn(true);
+        Mockito.when(accountRepository.findById(transactionDto.getOrigen())).thenReturn(Optional.of(senderAccount));
+        Mockito.when(transactionalService.doTransaction(transactionDto)).thenReturn(new TransactionEntity(1,1,2,100));
+        TransactionEntity transactionEntity=transactionalService.doTransaction(transactionDto);
+
+        Assertions.assertEquals(new TransactionEntity(1,1,2,100), transactionEntity);
+        Assertions.assertEquals(100, senderAccount.getMoney());
+        Assertions.assertEquals(0, destinationAccount.getMoney());
+        Mockito.verify(accountRepository, Mockito.atLeast(1)).existsById(transactionDto.getDestination());
+        Mockito.verify(accountRepository,Mockito.atLeast(1)).existsById(transactionDto.getOrigen());
+        Mockito.verify(accountRepository,Mockito.atLeast(1)).depositMoney(transactionDto.getAmount()*-1,transactionDto.getOrigen());
+        Mockito.verify(accountRepository,Mockito.atLeast(1)).depositMoney(transactionDto.getAmount(),transactionDto.getDestination());
+        Mockito.verify(transactionRepository).save(any(TransactionEntity.class));
+    }
 }
