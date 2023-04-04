@@ -54,4 +54,15 @@ class UserServiceTest {
         Mockito.verify(userRepository).existsById(userDto.getDocument());
 
     }
+    @Test
+    void Given_requestAllUsers_When_Invoke_getUsers_Then_Return_ListWithAllUsers(){
+        List<UserEntity> expectedUsers = new ArrayList<>();
+        expectedUsers.add(new UserEntity(7,"Limon","Mandarino","2025-03-24"));
+        expectedUsers.add(new UserEntity(8,"Corazon","De Melon","2025-03-24"));
+        Mockito.when(userRepository.findAll()).thenReturn(expectedUsers);
+        List<UserEntity> actualUsers = userService.getUsers();
+        Assertions.assertEquals(expectedUsers, actualUsers);
+        Mockito.verify(userRepository).findAll();
+
+    }
 }
