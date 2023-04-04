@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "ACCOUNT")
 @Data
 @AllArgsConstructor
-@Builder
 @NoArgsConstructor
 public class AccountEntity {
     @Id
