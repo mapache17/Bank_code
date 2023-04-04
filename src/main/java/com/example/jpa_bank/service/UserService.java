@@ -24,5 +24,7 @@ public class UserService {
         }
         return accountRepository.getAllAccounts(documentUser);
     }
-
+    public List<UserEntity> getUsers() {
+        return userRepository.findAll();
+    }
 }

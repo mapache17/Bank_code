@@ -20,10 +20,9 @@ public class UserController {
     public List<AccountEntity> getAllAccounts(@PathVariable int idDocument) {
         return userService.consultAccounts(idDocument);
     }
-    @GetMapping(path = "/user/check-Users/{id}")
-    public List<AccountEntity> getAllUsers(@PathVariable int id) {
-        return userService.consultAccounts(id);
+    @GetMapping(path = "/user/all-Users")
+    public List<UserEntity> getAllUsers() {
+        return userService.getUsers();
     }
-
 
 }
