@@ -1,21 +1,23 @@
 package com.example.jpa_bank.integration.controller;
 import com.example.jpa_bank.AbstractTest;
 import com.example.jpa_bank.controller.dto.AccountDto;
+import com.example.jpa_bank.controller.dto.DepositMoneyUserDto;
 import com.example.jpa_bank.controller.dto.UserDto;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 public class AccountControllerTest extends AbstractTest {
     private static final String PATH_CREATE_ACCOUNT = "/account/savings-account";
     private static final String PATH_CREATE_USER = "/user/savings-user";
     private static final String PATH_CHECK_BALANCE = "/account/check-balance/";
+    private static final String PATH_DEPOSIT_MONEY = "/account/deposit-money";
     @Autowired
     private TestRestTemplate restTemplate;
     @Test
@@ -63,5 +65,18 @@ public class AccountControllerTest extends AbstractTest {
     {
         ResponseEntity<AccountEntity> accountEntityResponseEntity= restTemplate.getForEntity(PATH_CHECK_BALANCE+1, AccountEntity.class);
         assertEquals(HttpStatusCode.valueOf(500),accountEntityResponseEntity.getStatusCode());
+    }
+    @Test
+    void Give_AnExistingAccount_When_Invoke_depositMoney_Then_TheAccountIsRecharged()
+    {
+        UserDto userDto = new UserDto(1,"Jhoan","Ome","2025-03-24");
+        restTemplate.postForEntity(PATH_CREATE_USER,userDto,UserEntity.class);
+        AccountDto accountDto = new AccountDto(1,"Ahorro",20,"2025-03-24",userDto.getDocument());
+        restTemplate.postForEntity(PATH_CREATE_ACCOUNT, accountDto, AccountEntity.class);
+        DepositMoneyUserDto depositMoneyUserDto = new DepositMoneyUserDto(10,accountDto.getId());
+        int money=depositMoneyUserDto.getMoneyAmount()+accountDto.getMoney();
+        ResponseEntity<AccountEntity> accountEntityResponseEntity =restTemplate.postForEntity(PATH_DEPOSIT_MONEY,depositMoneyUserDto, AccountEntity.class);
+        assertEquals(money, accountEntityResponseEntity.getBody().getMoney());
+
     }
 }
