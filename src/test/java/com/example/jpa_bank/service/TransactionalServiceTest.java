@@ -5,7 +5,6 @@ import com.example.jpa_bank.entity.TransactionEntity;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.repository.AccountRepository;
 import com.example.jpa_bank.repository.TransactionRepository;
-import com.example.jpa_bank.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,11 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.ArrayList;
 import static org.mockito.Mockito.*;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class TransactionalServiceTest {
