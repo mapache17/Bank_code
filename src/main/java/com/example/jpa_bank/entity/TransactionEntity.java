@@ -3,7 +3,6 @@ package com.example.jpa_bank.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Generated
 @Entity
 @Table(name = "TRANSACTION")
 @Data
