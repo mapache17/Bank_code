@@ -45,7 +45,7 @@ public class AccountControllerTest extends AbstractTest {
     @Test
     void Given_AnUserNOExist_When_Invoke_createAccount_Then_InternalServerError()
     {
-        AccountDto accountDto = new AccountDto(1,"Ahorro",0,"2025-03-24",2);
+        AccountDto accountDto = new AccountDto(1,"Ahorro",0,"2025-03-24",100);
         ResponseEntity<AccountEntity> accountEntityResponseEntity= restTemplate.postForEntity(PATH_CREATE_ACCOUNT, accountDto, AccountEntity.class);
         assertEquals(HttpStatusCode.valueOf(500), accountEntityResponseEntity.getStatusCode());
     }
@@ -62,7 +62,7 @@ public class AccountControllerTest extends AbstractTest {
     @Test
     void Given_AnIdAccountNOExist_When_Invoke_checkBalance_Then_InternalServerError()
     {
-        ResponseEntity<AccountEntity> accountEntityResponseEntity= restTemplate.getForEntity(PATH_CHECK_BALANCE+1, AccountEntity.class);
+        ResponseEntity<AccountEntity> accountEntityResponseEntity= restTemplate.getForEntity(PATH_CHECK_BALANCE+100, AccountEntity.class);
         assertEquals(HttpStatusCode.valueOf(500),accountEntityResponseEntity.getStatusCode());
     }
     @Test
