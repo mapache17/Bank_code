@@ -8,7 +8,6 @@ import com.example.jpa_bank.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -74,9 +73,9 @@ public class AccountControllerTest extends AbstractTest {
         AccountDto accountDto = new AccountDto(1,"Ahorro",20,"2025-03-24",userDto.getDocument());
         restTemplate.postForEntity(PATH_CREATE_ACCOUNT, accountDto, AccountEntity.class);
         DepositMoneyUserDto depositMoneyUserDto = new DepositMoneyUserDto(10,accountDto.getId());
+        restTemplate.put(PATH_DEPOSIT_MONEY,depositMoneyUserDto, AccountEntity.class);
         int money=depositMoneyUserDto.getMoneyAmount()+accountDto.getMoney();
-        ResponseEntity<AccountEntity> accountEntityResponseEntity =restTemplate.postForEntity(PATH_DEPOSIT_MONEY,depositMoneyUserDto, AccountEntity.class);
+        ResponseEntity<AccountEntity> accountEntityResponseEntity= restTemplate.getForEntity(PATH_CHECK_BALANCE+accountDto.getId(), AccountEntity.class);
         assertEquals(money, accountEntityResponseEntity.getBody().getMoney());
-
     }
 }
