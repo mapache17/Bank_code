@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class TransactionEntity {
     @Id
     @Column(name ="id", nullable = false)
