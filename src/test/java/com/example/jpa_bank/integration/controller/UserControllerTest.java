@@ -54,7 +54,7 @@ class UserControllerTest extends AbstractTest {
         ArrayList<UserEntity> expectedUsers = new ArrayList<>();
         expectedUsers.add(new UserEntity(userDto.getDocument(),userDto.getName(),userDto.getLastName(),userDto.getDateCreated()));
         expectedUsers.add(new UserEntity(userDto2.getDocument(),userDto2.getName(),userDto2.getLastName(),userDto2.getDateCreated()));
-        ResponseEntity<List<UserEntity>> userEntityResponseEntity = restTemplate.exchange(PATH_ALL_USERS, HttpMethod.GET, null, new ParameterizedTypeReference<List<UserEntity>>() {});
+        ResponseEntity<ArrayList<UserEntity>> userEntityResponseEntity = restTemplate.exchange(PATH_ALL_USERS, HttpMethod.GET, null, new ParameterizedTypeReference<ArrayList<UserEntity>>() {});
         assertEquals(expectedUsers,userEntityResponseEntity.getBody());
     }
 }
