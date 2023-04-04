@@ -25,7 +25,7 @@ class TransactionalServiceTest {
     private AccountRepository accountRepository;
 
     @Test
-    void Given_AnOriginNOExist_When_Invoke_doTransaction_Then_RuntimeException() {
+    void Given_NonExistingOriginAccount_When_Invoke_doTransaction_Then_RuntimeException() {
         TransactionDto transactionDto=new TransactionDto(1,1,1,100);
         Mockito.when(accountRepository.existsById(transactionDto.getOrigen())).thenReturn(false);
         Assertions.assertThrows(RuntimeException.class,() -> {
