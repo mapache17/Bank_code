@@ -58,7 +58,6 @@ class UserControllerTest extends AbstractTest {
         ResponseEntity<List<UserEntity>> response = restTemplate.exchange(PATH_ALL_USERS, HttpMethod.GET, null, new ParameterizedTypeReference<List<UserEntity>>() {});
         List<UserEntity> actualUsers = response.getBody();
         assert actualUsers != null;
-        assertTrue(actualUsers.containsAll(expectedUsers) && expectedUsers.containsAll(actualUsers));
         assertEquals(expectedUsers,actualUsers);
     }
 }
