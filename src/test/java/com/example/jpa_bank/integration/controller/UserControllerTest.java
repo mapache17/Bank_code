@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class UserControllerTest extends AbstractTest {
@@ -54,7 +55,10 @@ class UserControllerTest extends AbstractTest {
         ArrayList<UserEntity> expectedUsers = new ArrayList<>();
         expectedUsers.add(new UserEntity(userDto.getDocument(),userDto.getName(),userDto.getLastName(),userDto.getDateCreated()));
         expectedUsers.add(new UserEntity(userDto2.getDocument(),userDto2.getName(),userDto2.getLastName(),userDto2.getDateCreated()));
-        ResponseEntity<ArrayList<UserEntity>> userEntityResponseEntity = restTemplate.exchange(PATH_ALL_USERS, HttpMethod.GET, null, new ParameterizedTypeReference<ArrayList<UserEntity>>() {});
-        assertEquals(expectedUsers,userEntityResponseEntity.getBody());
+        ResponseEntity<List<UserEntity>> response = restTemplate.exchange(PATH_ALL_USERS, HttpMethod.GET, null, new ParameterizedTypeReference<List<UserEntity>>() {});
+        List<UserEntity> actualUsers = response.getBody();
+        assert actualUsers != null;
+        assertTrue(actualUsers.containsAll(expectedUsers) && expectedUsers.containsAll(actualUsers));
+        assertEquals(expectedUsers,actualUsers);
     }
 }
