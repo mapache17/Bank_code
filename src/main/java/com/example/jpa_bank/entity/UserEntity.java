@@ -1,12 +1,18 @@
 package com.example.jpa_bank.entity;
+
+import com.example.jpa_bank.controller.dto.UserDto;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "USER_IDENTITY")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserEntity {
     @Id
     @Column(name ="document", nullable = false)
