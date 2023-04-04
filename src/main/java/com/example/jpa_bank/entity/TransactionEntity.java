@@ -1,13 +1,17 @@
 package com.example.jpa_bank.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "TRANSACTION")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class TransactionEntity {
     @Id
     @Column(name ="id", nullable = false)
