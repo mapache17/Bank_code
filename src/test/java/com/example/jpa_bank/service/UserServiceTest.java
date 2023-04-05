@@ -29,6 +29,7 @@ class UserServiceTest {
         UserEntity user = userService.createUser(userDto);
         Assertions.assertEquals(new UserEntity(5,"Pepito","Perez","2025-03-24"), user);
         Mockito.verify(userRepository).save(new UserEntity(5,"Pepito","Perez","2025-03-24"));
+
     }
     @Test
     void Given_UserDocumentExists_When_Invoke_consultAccounts_Then_Return_AccountEntityList() {
@@ -43,6 +44,7 @@ class UserServiceTest {
         Assertions.assertEquals(expectedAccounts, accounts);
         Mockito.verify(userRepository).existsById(userDto.getDocument());
         Mockito.verify(accountRepository).getAllAccounts(userDto.getDocument());
+
     }
     @Test
     void Given_UserDocumentDONTExists_When_Invoke_consultAccounts_Then_throwRuntimeException() {
