@@ -6,15 +6,11 @@ import com.example.jpa_bank.controller.dto.UserDto;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.TransactionEntity;
 import com.example.jpa_bank.entity.UserEntity;
-import com.example.jpa_bank.repository.AccountRepository;
-import com.example.jpa_bank.repository.TransactionRepository;
-import com.example.jpa_bank.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class TransactionControllerTest extends AbstractTest {
@@ -24,12 +20,7 @@ class TransactionControllerTest extends AbstractTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private TransactionRepository transactionRepository;
+
     @Test
     void Given_NonExistingOriginAccount_When_Invoke_doTransaction_Then_InternalServerError() {
         TransactionDto transactionDto=new TransactionDto(1,5,1,100);
