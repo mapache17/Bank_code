@@ -4,7 +4,6 @@ import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.UserEntity;
 import com.example.jpa_bank.service.UserService;
 import lombok.AllArgsConstructor;
-import lombok.Generated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 

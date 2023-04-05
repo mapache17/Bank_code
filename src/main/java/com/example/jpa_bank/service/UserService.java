@@ -1,5 +1,4 @@
 package com.example.jpa_bank.service;
-
 import com.example.jpa_bank.controller.dto.UserDto;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.UserEntity;
@@ -7,7 +6,6 @@ import com.example.jpa_bank.repository.AccountRepository;
 import com.example.jpa_bank.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
