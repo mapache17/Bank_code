@@ -1,9 +1,8 @@
 package com.example.jpa_bank.entity;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -11,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Generated
 public class TransactionEntity {
     @Id
     @Column(name ="id", nullable = false)

@@ -3,7 +3,6 @@ import com.example.jpa_bank.controller.dto.*;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.service.AccountService;
 import lombok.AllArgsConstructor;
-import lombok.Generated;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor

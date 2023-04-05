@@ -4,25 +4,15 @@ import com.example.jpa_bank.controller.dto.AccountDto;
 import com.example.jpa_bank.controller.dto.UserDto;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.UserEntity;
-import com.example.jpa_bank.repository.AccountRepository;
-import com.example.jpa_bank.repository.UserRepository;
-import com.example.jpa_bank.service.UserService;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserControllerTest extends AbstractTest{
     private static final String PATH_CREATE_USER = "/user/savings-user";

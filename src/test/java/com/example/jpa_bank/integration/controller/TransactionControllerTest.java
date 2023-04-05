@@ -1,7 +1,5 @@
 package com.example.jpa_bank.integration.controller;
-
 import com.example.jpa_bank.AbstractTest;
-import com.example.jpa_bank.controller.TransactionController;
 import com.example.jpa_bank.controller.dto.AccountDto;
 import com.example.jpa_bank.controller.dto.TransactionDto;
 import com.example.jpa_bank.controller.dto.UserDto;
