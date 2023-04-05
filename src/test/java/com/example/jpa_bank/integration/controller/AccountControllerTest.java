@@ -7,6 +7,7 @@ import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.UserEntity;
 import com.example.jpa_bank.repository.AccountRepository;
 import com.example.jpa_bank.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,6 @@ public class AccountControllerTest extends AbstractTest {
     private static final String PATH_DEPOSIT_MONEY = "/account/deposit-money";
     @Autowired
     private TestRestTemplate restTemplate;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Test
     void Given_AnExistingUser_When_Invoke_createAccount_Then_CreateANewAccount()
@@ -85,5 +82,6 @@ public class AccountControllerTest extends AbstractTest {
         int money=depositMoneyUserDto.getMoneyAmount()+accountDto.getMoney();
         ResponseEntity<AccountEntity> accountEntityResponseEntity= restTemplate.getForEntity(PATH_CHECK_BALANCE+accountDto.getId(), AccountEntity.class);
         assertEquals(money, accountEntityResponseEntity.getBody().getMoney());
+
     }
 }
