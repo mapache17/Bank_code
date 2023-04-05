@@ -47,6 +47,7 @@ public class AccountServiceTests {
             accountService.insertAccount(accountDto);
         });
         Mockito.verify(userRepository).existsById(accountDto.getUser());
+
     }
     @Test
     void Given_AnExistingUserWithLessThanFourAccounts_When_Invoke_insertAccount_Then_Return_AccountEntity() {
@@ -62,6 +63,7 @@ public class AccountServiceTests {
         Mockito.verify(userRepository).existsById(accountDto.getUser());
         Mockito.verify(accountRepository).getAllAccounts(accountDto.getUser());
         Mockito.verify(accountRepository).save(new AccountEntity(3,"Ahorro",0,"2025-03-24",1));
+
     }
     @Test
     void Given_AAccountNOExist_When_Invoke_depositMoney_Then_RuntimeException()
@@ -72,6 +74,7 @@ public class AccountServiceTests {
             accountService.depositMoney(depositMoneyUserDto);
         });
         Mockito.verify(accountRepository).existsById(depositMoneyUserDto.getAccountNumber());
+
     }
     @Test
     void Given_AnExistingAccount_When_Invoke_depositMoney_Then_RuntimeException()
@@ -83,6 +86,7 @@ public class AccountServiceTests {
         Assertions.assertEquals(new AccountEntity(1,"Ahorro",0,"2025-03-24",1),accountService.depositMoney(depositMoneyUserDto));
         Mockito.verify(accountRepository).existsById(depositMoneyUserDto.getAccountNumber());
         Mockito.verify(accountRepository).findById(depositMoneyUserDto.getAccountNumber());
+
     }
     @Test
     void Given_AAccountNOExist_When_Invoke_checkBalance_Then_RuntimeException()
@@ -93,6 +97,7 @@ public class AccountServiceTests {
             accountService.checkBalance(accountDto.getId());
         });
         Mockito.verify(accountRepository).existsById(accountDto.getId());
+
     }
     @Test
     void Given_AnExistingAccount_When_Invoke_checkBalance_Then_RuntimeException()
@@ -104,6 +109,7 @@ public class AccountServiceTests {
         Assertions.assertEquals(new AccountEntity(1,"Ahorro",0,"2025-03-24",1),accountService.checkBalance(accountDto.getId()));
         Mockito.verify(accountRepository).existsById(accountDto.getId());
         Mockito.verify(accountRepository).findById(accountDto.getId());
+
     }
 
 }
