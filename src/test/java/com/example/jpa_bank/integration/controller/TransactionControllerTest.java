@@ -33,8 +33,14 @@ class TransactionControllerTest extends AbstractTest {
     @Autowired
     private TransactionRepository transactionRepository;
     @Test
-    void Given_NonExistingOriginOrDestinationAccount_When_Invoke_doTransaction_Then_InternalServerError() {
-        TransactionDto transactionDto=new TransactionDto(1,5,6,100);
+    void Given_NonExistingOriginAccount_When_Invoke_doTransaction_Then_InternalServerError() {
+        TransactionDto transactionDto=new TransactionDto(1,5,1,100);
+        ResponseEntity<TransactionEntity> transactionEntityResponseEntity= restTemplate.postForEntity(PATH_DO_TRANSACTION, transactionDto, TransactionEntity.class);
+        assertEquals(HttpStatusCode.valueOf(500), transactionEntityResponseEntity.getStatusCode());
+    }
+    @Test
+    void Given_NonExistingDestinationAccount_When_Invoke_doTransaction_Then_InternalServerError() {
+        TransactionDto transactionDto=new TransactionDto(1,1,6,100);
         ResponseEntity<TransactionEntity> transactionEntityResponseEntity= restTemplate.postForEntity(PATH_DO_TRANSACTION, transactionDto, TransactionEntity.class);
         assertEquals(HttpStatusCode.valueOf(500), transactionEntityResponseEntity.getStatusCode());
     }
