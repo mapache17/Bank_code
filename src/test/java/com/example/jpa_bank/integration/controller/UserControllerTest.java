@@ -53,13 +53,6 @@ class UserControllerTest extends AbstractTest{
         actualAcc.add(actualAccounts.get(actualAccounts.size()-1));
         assertEquals(expectedAcc,actualAcc);
     }
-    /*@Test
-    void Given_RequestUserAccountsNONExistingUser_When_Invoke_getAllAccounts_Then_ConsultAccounts() {
-        String nonExistingDocument = "11111111";
-        ResponseEntity<List<AccountEntity>> response = restTemplate.exchange(PATH_USER_ACCOUNTS+nonExistingDocument, HttpMethod.GET, null, new ParameterizedTypeReference<List<AccountEntity>>() {});
-        assertEquals(HttpStatusCode.valueOf(500), response.getBody());
-
-    }*/
 
     @Test
     void Given_RequestAllUsers_When_Invoke_getAllUsers_Then_ReturnAllUsers() {
