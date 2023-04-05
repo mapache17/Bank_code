@@ -1,14 +1,12 @@
 package com.example.jpa_bank.integration.controller;
 import com.example.jpa_bank.AbstractTest;
 import com.example.jpa_bank.controller.dto.AccountDto;
-import com.example.jpa_bank.controller.dto.DepositMoneyUserDto;
 import com.example.jpa_bank.controller.dto.UserDto;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.UserEntity;
 import com.example.jpa_bank.repository.AccountRepository;
 import com.example.jpa_bank.repository.UserRepository;
 import com.example.jpa_bank.service.UserService;
-import org.apache.catalina.User;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,10 +52,31 @@ class UserControllerTest extends AbstractTest {
 
     @Test
     void Given_RequestUserAccountsExistingUser_When_Invoke_getAllAccounts_Then_ConsultAccounts() {
-
+        userRepository.deleteAll();
+        accountRepository.deleteAll();
+        UserDto userDto = new UserDto(10,"Pepe","Pan","2025-03-24");
+        restTemplate.postForEntity(PATH_CREATE_USER,userDto,UserEntity.class);
+        AccountDto accountDto1 = new AccountDto(1,"Ahorro",100,"2025-03-24",userDto.getDocument());
+        AccountDto accountDto2 = new AccountDto(2,"Corriente",200,"2025-03-24",userDto.getDocument());
+        AccountDto accountDto3 = new AccountDto(3,"Ahorro",300,"2025-03-24",userDto.getDocument());
+        restTemplate.postForEntity(PATH_CREATE_ACCOUNT, accountDto1, AccountEntity.class);
+        restTemplate.postForEntity(PATH_CREATE_ACCOUNT, accountDto2, AccountEntity.class);
+        restTemplate.postForEntity(PATH_CREATE_ACCOUNT, accountDto3, AccountEntity.class);
+        List<AccountEntity> expectedAcc = new ArrayList<>();
+        expectedAcc.add(new AccountEntity(accountDto1.getId(),accountDto1.getType(),accountDto1.getMoney(),accountDto1.getDateCreated(),accountDto1.getUser()));
+        expectedAcc.add(new AccountEntity(accountDto2.getId(),accountDto2.getType(),accountDto2.getMoney(),accountDto2.getDateCreated(),accountDto2.getUser()));
+        expectedAcc.add(new AccountEntity(accountDto3.getId(),accountDto3.getType(),accountDto3.getMoney(),accountDto3.getDateCreated(),accountDto3.getUser()));
+        ResponseEntity<List<AccountEntity>> response = restTemplate.exchange(PATH_USER_ACCOUNTS+userDto.getDocument(), HttpMethod.GET, null, new ParameterizedTypeReference<List<AccountEntity>>() {});
+        List<AccountEntity> actualUserAccounts = response.getBody();
+        System.out.println("Expected accounts: " + expectedAcc);
+        System.out.println("Actual user accounts: " + actualUserAccounts);
+        assert actualUserAccounts != null;
+        assertTrue(actualUserAccounts.containsAll(expectedAcc) && expectedAcc.containsAll(actualUserAccounts));
+        assertEquals(expectedAcc,actualUserAccounts);
     }
     @Test
     void Given_RequestUserAccountsNONExistingUser_When_Invoke_getAllAccounts_Then_ConsultAccounts() {
+
     }
 
     @Test
