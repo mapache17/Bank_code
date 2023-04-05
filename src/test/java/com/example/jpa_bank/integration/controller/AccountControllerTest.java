@@ -5,6 +5,9 @@ import com.example.jpa_bank.controller.dto.DepositMoneyUserDto;
 import com.example.jpa_bank.controller.dto.UserDto;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.UserEntity;
+import com.example.jpa_bank.repository.AccountRepository;
+import com.example.jpa_bank.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -19,6 +22,15 @@ public class AccountControllerTest extends AbstractTest {
     private static final String PATH_DEPOSIT_MONEY = "/account/deposit-money";
     @Autowired
     private TestRestTemplate restTemplate;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+    @BeforeEach
+    void setUp() {
+        userRepository.deleteAll();
+        accountRepository.deleteAll();
+    }
     @Test
     void Given_AnExistingUser_When_Invoke_createAccount_Then_CreateANewAccount()
     {

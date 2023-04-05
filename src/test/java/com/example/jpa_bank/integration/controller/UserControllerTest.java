@@ -5,8 +5,12 @@ import com.example.jpa_bank.controller.dto.DepositMoneyUserDto;
 import com.example.jpa_bank.controller.dto.UserDto;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.UserEntity;
+import com.example.jpa_bank.repository.AccountRepository;
+import com.example.jpa_bank.repository.UserRepository;
 import com.example.jpa_bank.service.UserService;
 import org.apache.catalina.User;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -30,6 +34,16 @@ class UserControllerTest extends AbstractTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @BeforeEach
+    void setUp() {
+        userRepository.deleteAll();
+        accountRepository.deleteAll();
+    }
 
     @Test
     void Given_UserDataInDto_When_Invoke_createUser_Then_CreateNewUser() {
@@ -52,12 +66,13 @@ class UserControllerTest extends AbstractTest {
         UserDto userDto2 = new UserDto(9,"Armando","Mendoza","2025-03-24");
         restTemplate.postForEntity(PATH_CREATE_USER,userDto,UserEntity.class);
         restTemplate.postForEntity(PATH_CREATE_USER,userDto2,UserEntity.class);
-        ArrayList<UserEntity> expectedUsers = new ArrayList<>();
+        List<UserEntity> expectedUsers = new ArrayList<>();
         expectedUsers.add(new UserEntity(userDto.getDocument(),userDto.getName(),userDto.getLastName(),userDto.getDateCreated()));
         expectedUsers.add(new UserEntity(userDto2.getDocument(),userDto2.getName(),userDto2.getLastName(),userDto2.getDateCreated()));
         ResponseEntity<List<UserEntity>> response = restTemplate.exchange(PATH_ALL_USERS, HttpMethod.GET, null, new ParameterizedTypeReference<List<UserEntity>>() {});
         List<UserEntity> actualUsers = response.getBody();
         assert actualUsers != null;
+        assertTrue(actualUsers.containsAll(expectedUsers) && expectedUsers.containsAll(actualUsers));
         assertEquals(expectedUsers,actualUsers);
     }
 }

@@ -9,4 +9,5 @@ class JpaBankApplicationTests {
 	@Test
 	void contextLoads() {
 	}
+
 }
