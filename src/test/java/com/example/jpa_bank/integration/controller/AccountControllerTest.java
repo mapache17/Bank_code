@@ -26,11 +26,7 @@ public class AccountControllerTest extends AbstractTest {
     private UserRepository userRepository;
     @Autowired
     private AccountRepository accountRepository;
-    @BeforeEach
-    void setUp() {
-        userRepository.deleteAll();
-        accountRepository.deleteAll();
-    }
+
     @Test
     void Given_AnExistingUser_When_Invoke_createAccount_Then_CreateANewAccount()
     {
