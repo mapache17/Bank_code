@@ -1,5 +1,7 @@
 package com.example.jpa_bank.controller;
+import com.example.jpa_bank.controller.dto.DepositMoneyUserDto;
 import com.example.jpa_bank.controller.dto.TransactionDto;
+import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.TransactionEntity;
 import com.example.jpa_bank.service.TransactionalService;
 import lombok.AllArgsConstructor;
@@ -12,5 +14,9 @@ public class TransactionController {
     @PostMapping(path = "/transaction/transfer-money")
     public TransactionEntity doTransaction(@RequestBody TransactionDto transactionDto) {
         return transactionalService.doTransaction(transactionDto);
+    }
+    @PutMapping(path = "/transaction/deposit-money")
+    public AccountEntity depositMoney(@RequestBody DepositMoneyUserDto depositMoneyUserDto) {
+        return transactionalService.depositMoney(depositMoneyUserDto);
     }
 }

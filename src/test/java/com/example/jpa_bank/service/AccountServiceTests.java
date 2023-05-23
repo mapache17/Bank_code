@@ -65,29 +65,8 @@ public class AccountServiceTests {
         Mockito.verify(accountRepository).save(new AccountEntity(3,"Ahorro",0,"2025-03-24",1));
 
     }
-    @Test
-    void Given_AAccountNOExist_When_Invoke_depositMoney_Then_RuntimeException()
-    {
-        DepositMoneyUserDto depositMoneyUserDto = new DepositMoneyUserDto(100,1);
-        Mockito.when(accountRepository.existsById(depositMoneyUserDto.getAccountNumber())).thenReturn(false);
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            accountService.depositMoney(depositMoneyUserDto);
-        });
-        Mockito.verify(accountRepository).existsById(depositMoneyUserDto.getAccountNumber());
 
-    }
-    @Test
-    void Given_AnExistingAccount_When_Invoke_depositMoney_Then_RuntimeException()
-    {
-        DepositMoneyUserDto depositMoneyUserDto = new DepositMoneyUserDto(100,1);
-        Mockito.when(accountRepository.existsById(depositMoneyUserDto.getAccountNumber())).thenReturn(true);
-        Optional<AccountEntity> accountEntity = Optional.of(new AccountEntity( 1,"Ahorro",0,"2025-03-24",1));
-        Mockito.when(accountRepository.findById(depositMoneyUserDto.getAccountNumber())).thenReturn(accountEntity);
-        Assertions.assertEquals(new AccountEntity(1,"Ahorro",0,"2025-03-24",1),accountService.depositMoney(depositMoneyUserDto));
-        Mockito.verify(accountRepository).existsById(depositMoneyUserDto.getAccountNumber());
-        Mockito.verify(accountRepository).findById(depositMoneyUserDto.getAccountNumber());
 
-    }
     @Test
     void Given_AAccountNOExist_When_Invoke_checkBalance_Then_RuntimeException()
     {
