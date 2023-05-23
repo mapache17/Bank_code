@@ -13,10 +13,7 @@ public class AccountController {
     public AccountEntity createAccount(@RequestBody AccountDto accountDto) {
         return accountService.insertAccount(accountDto);
     }
-    @PutMapping(path = "/account/deposit-money")
-    public AccountEntity depositMoney(@RequestBody DepositMoneyUserDto depositMoneyUserDto) {
-        return accountService.depositMoney(depositMoneyUserDto);
-    }
+
     @GetMapping(path = "/account/check-balance/{idAccount}")
     public AccountEntity checkBalance(@PathVariable int idAccount) {
         return accountService.checkBalance(idAccount);

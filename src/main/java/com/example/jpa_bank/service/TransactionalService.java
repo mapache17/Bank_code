@@ -1,4 +1,5 @@
 package com.example.jpa_bank.service;
+import com.example.jpa_bank.controller.dto.DepositMoneyUserDto;
 import com.example.jpa_bank.controller.dto.TransactionDto;
 import com.example.jpa_bank.entity.AccountEntity;
 import com.example.jpa_bank.entity.TransactionEntity;
@@ -26,5 +27,12 @@ public class TransactionalService {
         accountRepository.depositMoney(transactionDto.getAmount(),transactionDto.getDestination());
         accountRepository.depositMoney(-1*transactionDto.getAmount(),transactionDto.getOrigen());
         return transactionRepository.save(new TransactionEntity(transactionDto.getId(), transactionDto.getOrigen(),transactionDto.getDestination(),transactionDto.getAmount()));
+    }
+    public AccountEntity depositMoney(DepositMoneyUserDto depositMoneyUserDto) {
+        if(!this.accountRepository.existsById(depositMoneyUserDto.getAccountNumber())){
+            throw new RuntimeException("La cuenta a la que quiere depositar no existe.");
+        }
+        accountRepository.depositMoney(depositMoneyUserDto.getMoneyAmount(), depositMoneyUserDto.getAccountNumber());
+        return accountRepository.findById(depositMoneyUserDto.getAccountNumber()).orElse(new AccountEntity());
     }
 }

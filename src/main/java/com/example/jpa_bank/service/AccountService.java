@@ -23,13 +23,6 @@ public class AccountService {
         return accountRepository.save(new AccountEntity(accountDto.getId(),accountDto.getType(),accountDto.getMoney(),accountDto.getDateCreated(),accountDto.getUser()));
     }
 
-    public AccountEntity depositMoney(DepositMoneyUserDto depositMoneyUserDto) {
-        if(!this.accountRepository.existsById(depositMoneyUserDto.getAccountNumber())){
-            throw new RuntimeException("La cuenta a la que quiere depositar no existe.");
-        }
-        accountRepository.depositMoney(depositMoneyUserDto.getMoneyAmount(), depositMoneyUserDto.getAccountNumber());
-        return accountRepository.findById(depositMoneyUserDto.getAccountNumber()).orElse(new AccountEntity());
-    }
     public AccountEntity checkBalance(int accountNumber){
         if(!this.accountRepository.existsById(accountNumber)){
             throw new RuntimeException("La cuenta a la que quiere consultar no existe.");
