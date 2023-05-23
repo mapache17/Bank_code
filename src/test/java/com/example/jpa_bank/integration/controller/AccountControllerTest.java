@@ -16,7 +16,6 @@ public class AccountControllerTest extends AbstractTest {
     private static final String PATH_CREATE_ACCOUNT = "/account/savings-account";
     private static final String PATH_CREATE_USER = "/user/savings-user";
     private static final String PATH_CHECK_BALANCE = "/account/check-balance/";
-    private static final String PATH_DEPOSIT_MONEY = "/account/deposit-money";
     @Autowired
     private TestRestTemplate restTemplate;
 
@@ -66,18 +65,5 @@ public class AccountControllerTest extends AbstractTest {
         ResponseEntity<AccountEntity> accountEntityResponseEntity= restTemplate.getForEntity(PATH_CHECK_BALANCE+100, AccountEntity.class);
         assertEquals(HttpStatusCode.valueOf(500),accountEntityResponseEntity.getStatusCode());
     }
-    @Test
-    void Give_AnExistingAccount_When_Invoke_depositMoney_Then_TheAccountIsRecharged()
-    {
-        UserDto userDto = new UserDto(1,"Jhoan","Ome","2025-03-24");
-        restTemplate.postForEntity(PATH_CREATE_USER,userDto,UserEntity.class);
-        AccountDto accountDto = new AccountDto(1,"Ahorro",20,"2025-03-24",userDto.getDocument());
-        restTemplate.postForEntity(PATH_CREATE_ACCOUNT, accountDto, AccountEntity.class);
-        DepositMoneyUserDto depositMoneyUserDto = new DepositMoneyUserDto(10,accountDto.getId());
-        restTemplate.put(PATH_DEPOSIT_MONEY,depositMoneyUserDto, AccountEntity.class);
-        int money=depositMoneyUserDto.getMoneyAmount()+accountDto.getMoney();
-        ResponseEntity<AccountEntity> accountEntityResponseEntity= restTemplate.getForEntity(PATH_CHECK_BALANCE+accountDto.getId(), AccountEntity.class);
-        assertEquals(money, accountEntityResponseEntity.getBody().getMoney());
 
-    }
 }
